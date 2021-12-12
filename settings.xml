@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+
+ <profiles>
+   <profile>
+     <id>repository</id>
+     <repositories>
+     </repositories>
+   </profile>
+ </profiles>
+ 
+ <activeProfiles>
+   <activeProfile>repository</activeProfile>
+ </activeProfiles>
+
+</settings>

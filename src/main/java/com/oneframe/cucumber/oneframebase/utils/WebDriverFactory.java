@@ -323,4 +323,77 @@ public abstract class WebDriverFactory {
     return element.getText();
   }
 
+  public static void scrollThePageDown(int pixel) {
+    JavascriptExecutor jse = (JavascriptExecutor) driver;
+    jse.executeScript("window.scrollBy(0," + pixel + ")");
+  }
+
+  public static void scrollThePageUp(int pixel) {
+    JavascriptExecutor jse = (JavascriptExecutor) driver;
+    jse.executeScript("window.scrollBy(0,-" + pixel + ")");
+  }
+
+  public static void openUrlInNewWindow(String applicationUrl) {
+    driver.switchTo().newWindow(WindowType.WINDOW).get(applicationUrl);
+  }
+
+  public static void openNewTab(String applicationUrl) {
+    driver.switchTo().newWindow(WindowType.TAB).get(applicationUrl);
+  }
+
+  public static String getNewlyOpenedTabTitle() {
+    ArrayList<String> tabs2 = null;
+    String pageTitle = null;
+    try {
+      tabs2 = new ArrayList<String>(driver.getWindowHandles());
+      driver.switchTo().window(tabs2.get(1));
+      waitForPageToLoad(10);
+      pageTitle = driver.getTitle();
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        driver.close();
+        driver.switchTo().window(tabs2.get(0));
+      } catch (Exception e) {
+        System.err.println("No New Tab found");
+      }
+    }
+    return pageTitle;
+  }
+
+  public static String getFontSizeOfTheWebElement(WebElement webElement) {
+    return webElement.getCssValue("font-size");
+  }
+
+  public static boolean isElementClickable(WebElement webElement, int timeOut) {
+    try {
+      WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+      wait.until(ExpectedConditions.elementToBeClickable(webElement));
+      return true;
+    } catch (org.openqa.selenium.ElementClickInterceptedException e) {
+      return false;
+    }
+  }
+
+  public static int getCountOfWebElememt(String xpath, int timeOut) {
+    return driver.findElements(By.xpath(xpath)).size();
+  }
+
+  public static void clickUsingJs(WebElement webElement) throws InterruptedException {
+    waitForPageToLoad(45);
+    waitForAnElementToBeVisible(webElement, 45);
+    waitForAnElementToBeClickable(webElement, 45);
+    try {
+      highlight(webElement);
+      JavascriptExecutor executor = (JavascriptExecutor) driver;
+      executor.executeScript("arguments[0].click();", webElement);
+    } catch (Exception e) {
+      Actions action =new Actions(driver);
+      highlight(webElement);
+      action.moveToElement(webElement).click().build().perform();
+    }
+  }
+
+  
 }

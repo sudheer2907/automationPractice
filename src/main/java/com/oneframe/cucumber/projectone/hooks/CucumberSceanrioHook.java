@@ -1,4 +1,4 @@
-package com.oneframe.cucumber.oneframebase.hooks;
+package com.oneframe.cucumber.projectone.hooks;
 
 import com.oneframe.cucumber.oneframebase.utils.LogPrinter;
 import com.oneframe.cucumber.oneframebase.utils.WebDriverFactory;

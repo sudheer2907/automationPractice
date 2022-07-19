@@ -2,16 +2,19 @@ package com.oneframe.cucumber.oneframebase.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -208,6 +211,18 @@ public abstract class WebDriverFactory {
   }
 
   /**
+   * Wait for an element to be visible.
+   *
+   * @param element - web element.
+   * @param timeOut - waiting time period.
+   * @author sudheer.singh
+   */
+  public static void waitForAnElementToBeClickable(WebElement element, int timeOut) {
+    WebDriverWait wait = new WebDriverWait(driver, timeOut);
+    wait.until(ExpectedConditions.elementToBeClickable(element));
+  }
+  
+  /**
    * Refresh current page.
    */
   public static void refresh() {
@@ -368,7 +383,7 @@ public abstract class WebDriverFactory {
 
   public static boolean isElementClickable(WebElement webElement, int timeOut) {
     try {
-      WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+      WebDriverWait wait = new WebDriverWait(driver, timeOut);
       wait.until(ExpectedConditions.elementToBeClickable(webElement));
       return true;
     } catch (org.openqa.selenium.ElementClickInterceptedException e) {

@@ -1,4 +1,4 @@
-package com.oneframe.cucumber.oneframebase.exception;
+package com.oneframe.cucumber.projectone.exception;
 
 /**
  * The ServiceExecutionException wraps all checked standard Java exception and enriches them with a

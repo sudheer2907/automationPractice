@@ -7,25 +7,25 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.oneframe.cucumber.oneframebase.reporting.GenerateReport;
+import com.oneframe.cucumber.base.utils.WebDriverFactory;
+import com.oneframe.cucumber.base.utils.reporting.GenerateReport;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import cucumber.api.testng.CucumberFeatureWrapper;
 import cucumber.api.testng.TestNGCucumberRunner;
+
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 
 @RunWith(Cucumber.class)
-
-@CucumberOptions(monochrome = true, features = "src//test//resources//features",
-    glue = "oneframe.cucumber.stepdefinitions",
-    plugin = {"pretty", "io.qameta.allure.cucumberjvm.AllureCucumberJvm",
-        "html:target/test-report/cucumber", "json:target/test-report/cucumber.json",
+@CucumberOptions(monochrome = true, features = {"src//test//resources//features"},
+    glue = {"oneframe.cucumber.stepdefinitions"},
+    plugin = {"pretty", "html:target/test-report/cucumber", "json:target/test-report/cucumber.json",
         "rerun:target/rerun.txt"},
     tags = {"@TestInputForms"})
 public class TestRunner extends AbstractTestNGCucumberTests {
   private TestNGCucumberRunner testNGCucumberRunner;
-  private static String scenarioName = null;
+  private static String scenarioName;
 
   /**
    * setUpClass.
@@ -59,11 +59,10 @@ public class TestRunner extends AbstractTestNGCucumberTests {
   public void tearDownClass() {
     testNGCucumberRunner.finish();
     GenerateReport.generateReport("oneFrame", "target/test-report");
+    WebDriverFactory.closeWindow();
   }
 
-  public static String getScenarioName() {
-    return scenarioName;
-  }
+
 
   @Override
   @DataProvider(parallel = true)

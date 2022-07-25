@@ -3,7 +3,7 @@
 <suite name="BDTSuite" data-provider-thread-count="5">
   <test name="Cucumber-Test">
     <packages>
-      <package name="oneframe.cucumber.testrunner"/>
+      <package name="com.cucumber.testrunner"/>
     </packages>
   </test>
 </suite>
